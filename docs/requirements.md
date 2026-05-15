@@ -5,8 +5,8 @@
 ### FR1: Reserve seats for a screening
 A customer must be able to reserve one or more available seats for a specific screening.
 
-### FR2: Reject already reserved seats
-The system must reject a reservation if one or more requested seats are already reserved.
+### FR2: Reject unavailable seats
+The system must reject a reservation if one or more requested seats do not exist or are already reserved.
 
 ### FR3: Validate age restrictions
 The system must reject a reservation if the customer's age is below the movie's minimum age rating.
@@ -18,7 +18,7 @@ The system must reject reservations made after the screening has started.
 The system must calculate the total price based on ticket type, seat type, number of seats, and applicable discounts.
 
 ### FR6: Apply group discount
-The system must apply a group discount when the reservation contains at least 5 tickets.
+The system must apply a 10% group discount when the reservation contains at least 5 tickets.
 
 ### FR7: Cancel reservation
 A customer must be able to cancel a reservation before the cancellation deadline.
@@ -31,16 +31,25 @@ The system must reject cancellation if the screening starts in less than 2 hours
 ### BR1: Age restriction
 Customer age must be greater than or equal to the movie age rating.
 
-### BR2: Seat availability
-All requested seats must exist and be available.
+### BR2: Seat existence
+All requested seats must exist in the screening room.
 
-### BR3: Group discount
+### BR3: Seat availability
+All requested seats must be available for the selected screening.
+
+### BR4: Minimum seat count
+A reservation must contain at least one seat.
+
+### BR5: Reservation time
+A reservation can only be created before the screening starts.
+
+### BR6: Group discount
 A reservation with 5 or more tickets receives a 10% discount.
 
-### BR4: VIP seat surcharge
+### BR7: VIP seat surcharge
 Each VIP seat adds an extra fee to the base ticket price.
 
-### BR5: Cancellation deadline
+### BR8: Cancellation deadline
 A reservation can only be cancelled at least 2 hours before the screening starts.
 
 ## Non-functional Requirements
