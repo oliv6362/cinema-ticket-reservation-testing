@@ -1,5 +1,8 @@
 namespace Cinema.Core.Services;
 
+/// <summary>
+/// Responsible for calculating the total price for a reservation for a screening
+/// </summary>
 public class PricingService
 {
     private const decimal TicketPrice = 100m;
