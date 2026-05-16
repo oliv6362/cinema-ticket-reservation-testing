@@ -2,6 +2,21 @@ using Cinema.Core.Entities;
 
 namespace Cinema.UnitTests.TestData;
 
+/// <summary>
+/// Provides reusable test data for unit tests.
+///
+/// This helper reduces duplication in test classes by creating common
+/// cinema domain objects such as screenings and reservations.
+///
+/// The default screening is configured with:
+/// - Movie age rating: 15
+/// - Screening start time: 15 May 2026 at 20:00
+/// - Seats: A1, A2, A3
+/// - No reserved seats
+///
+/// Individual tests can modify the returned objects when they need
+/// a specific test scenario.
+/// </summary>
 public static class TestCinemaData
 {
     public static Screening CreateDefaultScreening(int movieAgeRating = 15)
