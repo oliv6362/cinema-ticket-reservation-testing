@@ -14,6 +14,7 @@ This document focuses on four selected areas:
 |---|---|---|
 | Age restriction | FR3, BR1 | Boundary value testing |
 | Seat availability | FR2, BR2, BR3 | Equivalence partitioning |
+| Reservation time | FR4, BR5 | Boundary value testing |
 | Cancellation deadline | FR8, BR7 | Boundary value testing |
 | Group discount | FR6, BR6 | Boundary value testing |
 
@@ -60,7 +61,28 @@ Equivalence partitioning is used because requested seats can be divided into cla
 
 ---
 
-## 3. Cancellation Deadline
+## 3. Reservation Time
+
+### Related requirement
+
+- **FR4:** The system must reject reservations made after the screening has started.
+- **BR5:** A reservation can only be created before the screening starts.
+
+### Technique
+
+Boundary value testing is used because reservation time is an ordered time value. The important boundary is the screening start time.
+
+Assume the screening starts at `20:00`.
+
+| Test Case ID | Reservation Time | Screening Start | Expected Result |
+|---|---|---|---|
+| BB-TIME-01 | 19:59 | 20:00 | Accepted |
+| BB-TIME-02 | 20:00 | 20:00 | Rejected |
+| BB-TIME-03 | 20:01 | 20:00 | Rejected |
+
+---
+
+## 4. Cancellation Deadline
 
 ### Related requirement
 
@@ -81,7 +103,7 @@ Assume the screening starts at `20:00`.
 
 ---
 
-## 4. Group Discount
+## 5. Group Discount
 
 ### Related requirement
 
