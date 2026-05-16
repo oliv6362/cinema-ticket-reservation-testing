@@ -2,6 +2,9 @@ using Cinema.Core.Entities;
 
 namespace Cinema.Core.Results;
 
+/// <summary>
+/// Responsible for returning the result of a reservation
+/// </summary>
 public class ReservationResult
 {
     public bool Success { get; set; }
