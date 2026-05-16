@@ -1,7 +1,15 @@
 namespace Cinema.Core.Services;
 
 /// <summary>
-/// Responsible for calculating the total price for a reservation for a screening
+/// Handles ticket price calculation for cinema reservations.
+///
+/// The service currently uses a fixed ticket price and applies a 10% group
+/// discount when the reservation contains 5 or more tickets.
+///
+/// This supports the pricing-related requirements:
+/// - FR5: Calculate ticket price
+/// - FR6: Apply group discount
+/// - BR6: A reservation with 5 or more tickets receives a 10% discount
 /// </summary>
 public class PricingService
 {
