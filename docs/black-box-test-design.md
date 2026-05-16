@@ -2,72 +2,55 @@
 
 ## Purpose
 
-This document describes how selected black-box testing techniques are used to derive test cases from the requirements of the Cinema Ticket Reservation System.
+This document describe the black-box test design for the Cinema Ticket Reservation System.
 
-The purpose is not to test every possible input combination, but to demonstrate systematic test design using selected requirements.
+The test cases are derived from the requirements and business rules, not from the implementation. The purpose is to demonstrate selected black-box testing techniques as part of a wider software quality strategy.
 
-## Role in the Project
+## Scope
 
-Black-box testing is one of the main focus areas of the project. The test cases are derived from requirements and business rules, not from the implementation.
+This document focuses on four selected areas:
 
-The selected techniques are:
-
-| Technique | Used For |
-|---|---|
-| Equivalence partitioning | Seat availability |
-| Boundary value testing | Age restrictions, cancellation deadline, group discount |
-
----
-
-# 1. Age Restriction
-
-## Related requirements
-
-| ID | Description |
-|---|---|
-| FR3 | The system must reject a reservation if the customer's age is below the movie's minimum age rating. |
-| BR1 | Customer age must be greater than or equal to the movie age rating. |
-
-## Technique
-
-Boundary value testing.
-
-The movie age rating is an ordered value. The important boundary is the minimum allowed age.
-
-Assume the movie age rating is `15`.
-
-| Test Case ID | Customer Age | Expected Result |
-|---|---:|---|
-| BB-AGE-01 | 14 | Rejected |
-| BB-AGE-02 | 15 | Accepted |
-| BB-AGE-03 | 16 | Accepted |
-
----
-
-# 2. Seat Availability
-
-## Related requirements
-
-| ID | Description |
-|---|---|
-| FR1 | A customer must be able to reserve one or more available seats for a specific screening. |
-| FR2 | The system must reject a reservation if one or more requested seats do not exist or are already reserved. |
-| BR2 | All requested seats must exist in the screening room. |
-| BR3 | All requested seats must be available for the selected screening. |
-
-## Technique
-
-Equivalence partitioning.
-
-Requested seats can be divided into classes that should be handled differently by the system.
-
-| Partition | Example | Expected Result |
+| Area | Related Requirements | Technique |
 |---|---|---|
-| Existing and available seat | A1 | Accepted |
-| Existing but already reserved seat | A2 | Rejected |
-| Non-existing seat | Z99 | Rejected |
+| Age restriction | FR3, BR1 | Boundary value testing |
+| Seat availability | FR2, BR2, BR3 | Equivalence partitioning |
+| Cancellation deadline | FR8, BR7 | Boundary value testing |
+| Group discount | FR6, BR6 | Boundary value testing |
 
-## Test cases
+---
+
+## 1. Age Restriction
+
+### Related requirement
+
+- **FR3:** The system must reject a reservation if the customer's age is below the movie's minimum age rating.
+- **BR1:** Customer age must be greater than or equal to the movie age rating.
+
+### Technique
+
+Boundary value testing is used because age is an ordered numeric value. The important boundary is the movie's minimum age rating.
+
+Assume the movie has an age rating of `15`.
+
+| Test Case ID | Customer Age | Movie Age Rating | Expected Result |
+|---|---:|---:|---|
+| BB-AGE-01 | 14 | 15 | Rejected |
+| BB-AGE-02 | 15 | 15 | Accepted |
+| BB-AGE-03 | 16 | 15 | Accepted |
+
+---
+
+## 2. Seat Availability
+
+### Related requirement
+
+- **FR2:** The system must reject a reservation if one or more requested seats do not exist or are already reserved.
+- **BR2:** All requested seats must exist in the screening room.
+- **BR3:** All requested seats must be available for the selected screening.
+
+### Technique
+
+Equivalence partitioning is used because requested seats can be divided into classes that should produce different system behavior.
 
 | Test Case ID | Requested Seat | Seat State | Expected Result |
 |---|---|---|---|
@@ -77,21 +60,16 @@ Requested seats can be divided into classes that should be handled differently b
 
 ---
 
-# 3. Cancellation Deadline
+## 3. Cancellation Deadline
 
-## Related requirements
+### Related requirement
 
-| ID | Description |
-|---|---|
-| FR7 | A customer must be able to cancel a reservation before the cancellation deadline. |
-| FR8 | The system must reject cancellation if the screening starts in less than 2 hours. |
-| BR8 | A reservation can only be cancelled at least 2 hours before the screening starts. |
+- **FR8:** The system must reject cancellation if the screening starts in less than 2 hours.
+- **BR7:** A reservation can only be cancelled at least 2 hours before the screening starts.
 
-## Technique
+### Technique
 
-Boundary value testing.
-
-The cancellation deadline is an ordered time boundary. The important boundary is exactly 2 hours before the screening starts.
+Boundary value testing is used because the cancellation rule depends on an ordered time boundary.
 
 Assume the screening starts at `20:00`.
 
@@ -103,29 +81,27 @@ Assume the screening starts at `20:00`.
 
 ---
 
-# 4. Group Discount
+## 4. Group Discount
 
-## Related requirements
+### Related requirement
 
-| ID | Description |
-|---|---|
-| FR6 | The system must apply a 10% group discount when the reservation contains at least 5 tickets. |
-| BR6 | A reservation with 5 or more tickets receives a 10% discount. |
+- **FR6:** The system must apply a 10% group discount when the reservation contains at least 5 tickets.
+- **BR6:** A reservation with 5 or more tickets receives a 10% discount.
 
-## Technique
+### Technique
 
-Boundary value testing.
+Boundary value testing is used because the discount rule has a clear numeric boundary at 5 tickets.
 
-The discount boundary is 5 tickets.
-
-| Test Case ID | Ticket Count | Expected Discount |
-|---|---:|---:|
-| BB-DISCOUNT-01 | 4 | 0% |
-| BB-DISCOUNT-02 | 5 | 10% |
-| BB-DISCOUNT-03 | 6 | 10% |
+| Test Case ID | Ticket Count | Expected Discount | Expected Result |
+|---|---:|---:|---|
+| BB-DISCOUNT-01 | 4 | 0% | No group discount |
+| BB-DISCOUNT-02 | 5 | 10% | Group discount applied |
+| BB-DISCOUNT-03 | 6 | 10% | Group discount applied |
 
 ---
 
-# Summary
+## Summary
 
-This black-box design intentionally focuses on selected important business rules instead of exhaustive test coverage. This supports the wide exam approach, where black-box testing is one part of a larger test strategy that also includes unit testing, design for testability, API testing, BDD, and white-box testing.
+This black-box test design demonstrates how selected requirements can be transformed into systematic test cases using equivalence partitioning and boundary value testing.
+
+The design is intentionally limited in scope because the project uses a wide approach. Black-box testing is one part of the overall software quality strategy, alongside design for testability, unit test design, API testing with Postman, BDD/Cucumber, and selected white-box testing.
