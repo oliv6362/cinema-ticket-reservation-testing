@@ -5,7 +5,18 @@ using Cinema.Core.Results;
 namespace Cinema.Core.Services;
 
 /// <summary>
-/// Responsible for creating and cancelling seat reservations for a screening
+/// Handles the core business logic for creating and cancelling cinema reservations.
+///
+/// This service enforces the main reservation rules from the requirements:
+/// - A reservation must contain at least one seat.
+/// - Reservations cannot be made after the screening has started.
+/// - Customers must satisfy the movie age rating.
+/// - Requested seats must exist and be available.
+/// - Cancellations must be made at least 2 hours before the screening starts.
+///
+/// The service depends on <see cref="ITimeProvider"/> instead of using
+/// <see cref="DateTime.Now"/> directly, which makes time-dependent logic
+/// deterministic and unit testable.
 /// </summary>
 public class ReservationService
 {
@@ -18,6 +29,7 @@ public class ReservationService
         _pricingService = pricingService;
     }
 
+    // Attempts to reserve seats for a screening.
     public ReservationResult ReserveSeats(Screening screening, List<string> requestedSeats, int customerAge)
     {
         if (requestedSeats.Count == 0)
@@ -77,6 +89,7 @@ public class ReservationService
         return ReservationResult.Ok(reservation);
     }
 
+    // Attempts to cancel an existing reservation.
     public ReservationResult CancelReservation(Screening screening, Reservation reservation)
     {
         var timeUntilScreening = screening.StartsAt - _timeProvider.Now;
