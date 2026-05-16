@@ -4,6 +4,31 @@ using Cinema.UnitTests.Fakes;
 
 namespace Cinema.UnitTests.Services;
 
+/// <summary>
+/// Unit tests for <see cref="ReservationService"/>.
+///
+/// These tests verify the reservation and cancellation rules from the
+/// Cinema Ticket Reservation System requirements.
+///
+/// The tests are derived from the black-box test design:
+/// - FR2: Reject unavailable seats
+/// - FR3: Validate age restrictions
+/// - FR4: Validate reservation time
+/// - FR7: Cancel reservation
+/// - FR8: Reject late cancellation
+/// - BR1: Customer age must be greater than or equal to the movie age rating
+/// - BR2: All requested seats must exist in the screening room
+/// - BR3: All requested seats must be available for the selected screening
+/// - BR5: A reservation can only be created before the screening starts
+/// - BR7: A reservation can only be cancelled at least 2 hours before the screening starts
+///
+/// Boundary value testing is used for age restrictions, reservation time,
+/// and cancellation deadline. Equivalence partitioning is used for seat
+/// existence and availability.
+///
+/// The BB prefix in the test names refers to black-box test cases from
+/// the black-box test design document.
+/// </summary>
 public class ReservationServiceTests
 {
     private readonly FakeTimeProvider _timeProvider;
@@ -21,9 +46,7 @@ public class ReservationServiceTests
         _reservationService = new ReservationService(_timeProvider, _pricingService);
     }
 
-    /// <summary>
-    /// Age
-    /// </summary>
+    // Age restriction
     [Fact]
     public void ReserveSeats_BB_AGE_01_CustomerYoungerThanMovieRating_ShouldRejectReservation()
     {
@@ -72,9 +95,7 @@ public class ReservationServiceTests
         Assert.NotNull(result.Reservation);
     }
     
-    /// <summary>
-    /// Seat
-    /// </summary>
+    // Seat availability
     [Fact]
     public void ReserveSeats_BB_SEAT_01_SeatExistsAndIsAvailable_ShouldAcceptReservation()
     {
@@ -122,9 +143,7 @@ public class ReservationServiceTests
         Assert.Equal("SEAT_DOES_NOT_EXIST", result.ErrorCode);
     }
 
-    /// <summary>
-    /// Time
-    /// </summary>
+    // Reservation time
     [Fact]
     public void ReserveSeats_BB_TIME_01_BeforeScreeningStart_ShouldAcceptReservation()
     {
@@ -182,9 +201,7 @@ public class ReservationServiceTests
         Assert.Equal("SCREENING_ALREADY_STARTED", result.ErrorCode);
     }
     
-    /// <summary>
-    /// Cancel
-    /// </summary>
+    // Cancellation deadline
     [Fact]
     public void CancelReservation_BB_CANCEL_01_MoreThanTwoHoursBeforeScreening_ShouldAcceptCancellation()
     {
