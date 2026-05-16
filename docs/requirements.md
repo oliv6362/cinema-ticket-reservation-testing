@@ -15,7 +15,7 @@ The system must reject a reservation if the customer's age is below the movie's 
 The system must reject reservations made after the screening has started.
 
 ### FR5: Calculate ticket price
-The system must calculate the total price based on ticket type, seat type, number of seats, and applicable discounts.
+The system must calculate the total ticket price based on the number of tickets and applicable discounts.
 
 ### FR6: Apply group discount
 The system must apply a 10% group discount when the reservation contains at least 5 tickets.
@@ -25,6 +25,8 @@ A customer must be able to cancel a reservation before the cancellation deadline
 
 ### FR8: Reject late cancellation
 The system must reject cancellation if the screening starts in less than 2 hours.
+
+---
 
 ## Business Rules
 
@@ -46,11 +48,10 @@ A reservation can only be created before the screening starts.
 ### BR6: Group discount
 A reservation with 5 or more tickets receives a 10% discount.
 
-### BR7: VIP seat surcharge
-Each VIP seat adds an extra fee to the base ticket price.
-
-### BR8: Cancellation deadline
+### BR7: Cancellation deadline
 A reservation can only be cancelled at least 2 hours before the screening starts.
+
+---
 
 ## Non-functional Requirements
 
