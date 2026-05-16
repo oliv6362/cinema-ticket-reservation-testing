@@ -1,4 +1,4 @@
-using Cinema.Core.Entities;
+using Cinema.UnitTests.TestData;
 using Cinema.Core.Services;
 using Cinema.UnitTests.Fakes;
 
@@ -28,7 +28,7 @@ public class ReservationServiceTests
     public void ReserveSeats_BB_AGE_01_CustomerYoungerThanMovieRating_ShouldRejectReservation()
     {
         // Arrange
-        var screening = CreateDefaultScreening(movieAgeRating: 15);
+        var screening = TestCinemaData.CreateDefaultScreening(movieAgeRating: 15);
         var requestedSeats = new List<string> { "A1" };
         var customerAge = 14;
 
@@ -44,7 +44,7 @@ public class ReservationServiceTests
     public void ReserveSeats_BB_AGE_02_CustomerEqualToMovieRating_ShouldAcceptReservation()
     {
         // Arrange
-        var screening = CreateDefaultScreening(movieAgeRating: 15);
+        var screening = TestCinemaData.CreateDefaultScreening(movieAgeRating: 15);
         var requestedSeats = new List<string> { "A1" };
         var customerAge = 15;
 
@@ -60,7 +60,7 @@ public class ReservationServiceTests
     public void ReserveSeats_BB_AGE_03_CustomerOlderThanMovieRating_ShouldAcceptReservation()
     {
         // Arrange
-        var screening = CreateDefaultScreening(movieAgeRating: 15);
+        var screening = TestCinemaData.CreateDefaultScreening(movieAgeRating: 15);
         var requestedSeats = new List<string> { "A1" };
         var customerAge = 16;
 
@@ -79,7 +79,7 @@ public class ReservationServiceTests
     public void ReserveSeats_BB_SEAT_01_SeatExistsAndIsAvailable_ShouldAcceptReservation()
     {
         // Arrange
-        var screening = CreateDefaultScreening();
+        var screening = TestCinemaData.CreateDefaultScreening();
         var requestedSeats = new List<string> { "A1" };
 
         // Act
@@ -94,7 +94,7 @@ public class ReservationServiceTests
     public void ReserveSeats_BB_SEAT_02_SeatExistsButAlreadyReserved_ShouldRejectReservation()
     {
         // Arrange
-        var screening = CreateDefaultScreening();
+        var screening = TestCinemaData.CreateDefaultScreening();
         screening.ReservedSeats.Add("A2");
 
         var requestedSeats = new List<string> { "A2" };
@@ -111,7 +111,7 @@ public class ReservationServiceTests
     public void ReserveSeats_BB_SEAT_03_SeatDoesNotExist_ShouldRejectReservation()
     {
         // Arrange
-        var screening = CreateDefaultScreening();
+        var screening = TestCinemaData.CreateDefaultScreening();
         var requestedSeats = new List<string> { "Z99" };
 
         // Act
@@ -129,7 +129,7 @@ public class ReservationServiceTests
     public void ReserveSeats_BB_TIME_01_BeforeScreeningStart_ShouldAcceptReservation()
     {
         // Arrange
-        var screening = CreateDefaultScreening();
+        var screening = TestCinemaData.CreateDefaultScreening();
         screening.StartsAt = new DateTime(2026, 5, 15, 20, 0, 0);
 
         _timeProvider.Now = new DateTime(2026, 5, 15, 19, 59, 0);
@@ -148,7 +148,7 @@ public class ReservationServiceTests
     public void ReserveSeats_BB_TIME_02_ExactlyAtScreeningStart_ShouldRejectReservation()
     {
         // Arrange
-        var screening = CreateDefaultScreening();
+        var screening = TestCinemaData.CreateDefaultScreening();
         screening.StartsAt = new DateTime(2026, 5, 15, 20, 0, 0);
 
         _timeProvider.Now = new DateTime(2026, 5, 15, 20, 0, 0);
@@ -167,7 +167,7 @@ public class ReservationServiceTests
     public void ReserveSeats_BB_TIME_03_AfterScreeningStart_ShouldRejectReservation()
     {
         // Arrange
-        var screening = CreateDefaultScreening();
+        var screening = TestCinemaData.CreateDefaultScreening();
         screening.StartsAt = new DateTime(2026, 5, 15, 20, 0, 0);
 
         _timeProvider.Now = new DateTime(2026, 5, 15, 20, 1, 0);
@@ -189,12 +189,12 @@ public class ReservationServiceTests
     public void CancelReservation_BB_CANCEL_01_MoreThanTwoHoursBeforeScreening_ShouldAcceptCancellation()
     {
         // Arrange
-        var screening = CreateDefaultScreening();
+        var screening = TestCinemaData.CreateDefaultScreening();
         screening.StartsAt = new DateTime(2026, 5, 15, 20, 0, 0);
 
         _timeProvider.Now = new DateTime(2026, 5, 15, 17, 59, 0);
 
-        var reservation = CreateDefaultReservation(screening.Id, "A1");
+        var reservation = TestCinemaData.CreateDefaultReservation(screening.Id, "A1");
         screening.ReservedSeats.Add("A1");
 
         // Act
@@ -210,12 +210,12 @@ public class ReservationServiceTests
     public void CancelReservation_BB_CANCEL_02_ExactlyTwoHoursBeforeScreening_ShouldAcceptCancellation()
     {
         // Arrange
-        var screening = CreateDefaultScreening();
+        var screening = TestCinemaData.CreateDefaultScreening();
         screening.StartsAt = new DateTime(2026, 5, 15, 20, 0, 0);
 
         _timeProvider.Now = new DateTime(2026, 5, 15, 18, 0, 0);
 
-        var reservation = CreateDefaultReservation(screening.Id, "A1");
+        var reservation = TestCinemaData.CreateDefaultReservation(screening.Id, "A1");
         screening.ReservedSeats.Add("A1");
 
         // Act
@@ -231,12 +231,12 @@ public class ReservationServiceTests
     public void CancelReservation_BB_CANCEL_03_LessThanTwoHoursBeforeScreening_ShouldRejectCancellation()
     {
         // Arrange
-        var screening = CreateDefaultScreening();
+        var screening = TestCinemaData.CreateDefaultScreening();
         screening.StartsAt = new DateTime(2026, 5, 15, 20, 0, 0);
 
         _timeProvider.Now = new DateTime(2026, 5, 15, 18, 1, 0);
 
-        var reservation = CreateDefaultReservation(screening.Id, "A1");
+        var reservation = TestCinemaData.CreateDefaultReservation(screening.Id, "A1");
         screening.ReservedSeats.Add("A1");
 
         // Act
@@ -247,40 +247,5 @@ public class ReservationServiceTests
         Assert.Equal("CANCELLATION_TOO_LATE", result.ErrorCode);
         Assert.False(reservation.IsCancelled);
         Assert.Contains("A1", screening.ReservedSeats);
-    }
-
-    private static Screening CreateDefaultScreening(int movieAgeRating = 15)
-    {
-        return new Screening
-        {
-            Id = Guid.NewGuid(),
-            StartsAt = new DateTime(2026, 5, 15, 20, 0, 0),
-            Movie = new Movie
-            {
-                Id = Guid.NewGuid(),
-                Title = "Test Movie",
-                AgeRating = movieAgeRating
-            },
-            Seats =
-            [
-                new Seat { SeatNumber = "A1" },
-                new Seat { SeatNumber = "A2" },
-                new Seat { SeatNumber = "A3" }
-            ],
-            ReservedSeats = []
-        };
-    }
-
-    private static Reservation CreateDefaultReservation(Guid screeningId, params string[] seatNumbers)
-    {
-        return new Reservation
-        {
-            Id = Guid.NewGuid(),
-            ScreeningId = screeningId,
-            SeatNumbers = seatNumbers.ToList(),
-            CustomerAge = 18,
-            TotalPrice = seatNumbers.Length * 100m,
-            IsCancelled = false
-        };
     }
 }
