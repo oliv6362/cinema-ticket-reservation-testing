@@ -2,6 +2,23 @@ using Cinema.Core.Services;
 
 namespace Cinema.UnitTests.Services;
 
+/// <summary>
+/// Unit tests for <see cref="PricingService"/>.
+///
+/// These tests verify the ticket price calculation rules from the
+/// Cinema Ticket Reservation System requirements.
+///
+/// The tests are derived from the black-box test design:
+/// - FR5: Calculate ticket price
+/// - FR6: Apply group discount
+/// - BR6: A reservation with 5 or more tickets receives a 10% discount
+///
+/// Boundary value testing is used because the group discount has a clear
+/// numeric boundary at 5 tickets.
+///
+/// The BB prefix in the test names refers to black-box test cases from
+/// the black-box test design document.
+/// </summary>
 public class PricingServiceTests
 {
     [Fact]
