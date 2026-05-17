@@ -18,7 +18,7 @@ namespace Cinema.Core.Services;
 /// <see cref="DateTime.Now"/> directly, which makes time-dependent logic
 /// deterministic and unit testable.
 /// </summary>
-public class ReservationService
+public class ReservationService : IReservationService
 {
     private readonly ITimeProvider _timeProvider;
     private readonly PricingService _pricingService;

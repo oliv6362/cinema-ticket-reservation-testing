@@ -4,6 +4,7 @@ using Cinema.Core.Results;
 using Cinema.Core.Services;
 using Cinema.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
+using Cinema.Core.Interfaces;
 
 namespace Cinema.Api.Controllers;
 
@@ -15,9 +16,9 @@ namespace Cinema.Api.Controllers;
 public class ReservationsController : ControllerBase
 {
     private readonly InMemoryCinemaStore _store;
-    private readonly ReservationService _reservationService;
-
-    public ReservationsController(InMemoryCinemaStore store, ReservationService reservationService)
+    private readonly IReservationService _reservationService;
+    
+    public ReservationsController(InMemoryCinemaStore store, IReservationService reservationService)
     {
         _store = store;
         _reservationService = reservationService;
