@@ -17,13 +17,15 @@ public class ReservationsController : ControllerBase
     private readonly InMemoryCinemaStore _store;
     private readonly ReservationService _reservationService;
 
-    public ReservationsController( InMemoryCinemaStore store, ReservationService reservationService)
+    public ReservationsController(InMemoryCinemaStore store, ReservationService reservationService)
     {
         _store = store;
         _reservationService = reservationService;
     }
 
+    /// <summary>
     /// Creates a reservation for seats in a screening.
+    /// </summary>
     [HttpPost]
     public IActionResult CreateReservation(CreateReservationRequest request)
     {   
@@ -53,7 +55,9 @@ public class ReservationsController : ControllerBase
             ToReservationResponse(result.Reservation));
     }
 
+    /// <summary>
     /// Gets a reservation by ID.
+    /// </summary>
     [HttpGet("{reservationId:guid}")]
     public IActionResult GetReservationById(Guid reservationId)
     {
@@ -71,7 +75,9 @@ public class ReservationsController : ControllerBase
         return Ok(ToReservationResponse(reservation));
     }
 
+    /// <summary>
     /// Cancels an existing reservation.
+    /// </summary>
     [HttpPost("{reservationId:guid}/cancel")]
     public IActionResult CancelReservation(Guid reservationId)
     {
@@ -111,6 +117,7 @@ public class ReservationsController : ControllerBase
         });
     }
 
+    // Maps core service failures to HTTP responses.
     private IActionResult MapFailureResult(ReservationResult result)
     {
         var errorResponse = new
