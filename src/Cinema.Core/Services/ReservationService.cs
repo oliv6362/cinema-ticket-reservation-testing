@@ -32,7 +32,7 @@ public class ReservationService
     // Attempts to reserve seats for a screening.
     public ReservationResult ReserveSeats(Screening screening, List<string> requestedSeats, int customerAge)
     {
-        if (requestedSeats.Count == 0)
+        if (requestedSeats is null || requestedSeats.Count == 0)
         {
             return ReservationResult.Fail(
                 "NO_SEATS_REQUESTED",
