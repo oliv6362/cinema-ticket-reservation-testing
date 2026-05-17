@@ -1,5 +1,5 @@
-using Cinema.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
+using Cinema.Core.Interfaces;
 
 namespace Cinema.Api.Controllers;
 
@@ -7,9 +7,9 @@ namespace Cinema.Api.Controllers;
 [Route("api/test-data")]
 public class TestDataController : ControllerBase
 {
-    private readonly InMemoryCinemaStore _store;
+    private readonly ICinemaStore _store;
 
-    public TestDataController(InMemoryCinemaStore store)
+    public TestDataController(ICinemaStore store)
     {
         _store = store;
     }

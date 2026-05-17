@@ -1,7 +1,6 @@
 using Cinema.Api.Contracts.Dtos;
 using Cinema.Core.Entities;
 using Cinema.Core.Results;
-using Cinema.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Cinema.Core.Interfaces;
 
