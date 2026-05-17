@@ -17,7 +17,7 @@ builder.Services.AddScoped<PricingService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
 
 // Infrastructure services
-builder.Services.AddSingleton<InMemoryCinemaStore>();
+builder.Services.AddSingleton<ICinemaStore, InMemoryCinemaStore>();
 builder.Services.AddScoped<ITimeProvider, SystemTimeProvider>();
 
 var app = builder.Build();

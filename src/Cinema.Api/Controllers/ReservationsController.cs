@@ -1,7 +1,6 @@
 using Cinema.Api.Contracts.Dtos;
 using Cinema.Core.Entities;
 using Cinema.Core.Results;
-using Cinema.Core.Services;
 using Cinema.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Cinema.Core.Interfaces;
@@ -15,10 +14,10 @@ namespace Cinema.Api.Controllers;
 [Route("api/reservations")]
 public class ReservationsController : ControllerBase
 {
-    private readonly InMemoryCinemaStore _store;
+    private readonly ICinemaStore _store;
     private readonly IReservationService _reservationService;
-    
-    public ReservationsController(InMemoryCinemaStore store, IReservationService reservationService)
+
+    public ReservationsController(ICinemaStore store, IReservationService reservationService)
     {
         _store = store;
         _reservationService = reservationService;

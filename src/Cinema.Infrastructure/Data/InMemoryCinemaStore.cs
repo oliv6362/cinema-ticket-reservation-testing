@@ -1,4 +1,5 @@
 using Cinema.Core.Entities;
+using Cinema.Core.Interfaces;
 
 namespace Cinema.Infrastructure.Data;
 
@@ -6,7 +7,7 @@ namespace Cinema.Infrastructure.Data;
 /// Simple in-memory data store used by the API layer during development
 /// and API testing.
 /// </summary>
-public class InMemoryCinemaStore
+public class InMemoryCinemaStore : ICinemaStore
 {
     public List<Screening> Screenings { get; } = [];
     public List<Reservation> Reservations { get; } = [];
