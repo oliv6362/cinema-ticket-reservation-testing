@@ -1,0 +1,428 @@
+{
+  "info": {
+    "_postman_id": "bd5784f1-ea20-4dfc-8ccb-dc264fcc2e5a",
+    "name": "CinemaReservationSystem",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "49619079",
+    "_collection_link": "https://go.postman.co/collection/49619079-bd5784f1-ea20-4dfc-8ccb-dc264fcc2e5a?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "1. Setup",
+      "item": [
+        {
+          "name": "Reset test data",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204 No Content\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "packages": {},
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/test-data/reset",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "test-data",
+                "reset"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Future Reservations",
+      "item": [
+        {
+          "name": "Create reservation - success",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201 Created\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Response contains reservation ID\", function () {",
+                  "    const body = pm.response.json();",
+                  "",
+                  "    pm.expect(body.reservationId).to.exist;",
+                  "    pm.collectionVariables.set(\"reservationId\", body.reservationId);",
+                  "});",
+                  "",
+                  "pm.test(\"Reservation contains requested seat\", function () {",
+                  "    const body = pm.response.json();",
+                  "",
+                  "    pm.expect(body.seatNumbers).to.include(\"A1\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"screeningId\": \"{{futureScreeningId}}\",\n  \"seatNumbers\": [\"A1\"],\n  \"customerAge\": 18\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/reservations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reservations"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create reservation - seat already taken",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 409 Conflict\", function () {",
+                  "    pm.response.to.have.status(409);",
+                  "});",
+                  "",
+                  "pm.test(\"Error code is SEAT_ALREADY_RESERVED\", function () {",
+                  "    const body = pm.response.json();",
+                  "",
+                  "    pm.expect(body.errorCode).to.eql(\"SEAT_ALREADY_RESERVED\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"screeningId\": \"{{futureScreeningId}}\",\n  \"seatNumbers\": [\"A1\"],\n  \"customerAge\": 18\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/reservations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reservations"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create reservation - customer too young",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Error code is CUSTOMER_TOO_YOUNG\", function () {",
+                  "    const body = pm.response.json();",
+                  "",
+                  "    pm.expect(body.errorCode).to.eql(\"CUSTOMER_TOO_YOUNG\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"screeningId\": \"{{futureScreeningId}}\",\n  \"seatNumbers\": [\"A2\"],\n  \"customerAge\": 14\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/reservations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reservations"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create reservation - no seats requested",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400 Bad Request\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});",
+                  "",
+                  "pm.test(\"Error code is NO_SEATS_REQUESTED\", function () {",
+                  "    const body = pm.response.json();",
+                  "",
+                  "    pm.expect(body.errorCode).to.eql(\"NO_SEATS_REQUESTED\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"screeningId\": \"{{futureScreeningId}}\",\n  \"seatNumbers\": [],\n  \"customerAge\": 18\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/reservations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reservations"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. Late Reservations",
+      "item": [
+        {
+          "name": "Create reservation - success",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201 Created\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Response contains reservation ID\", function () {",
+                  "    const body = pm.response.json();",
+                  "",
+                  "    pm.expect(body.reservationId).to.exist;",
+                  "    pm.collectionVariables.set(\"reservationId\", body.reservationId);",
+                  "});",
+                  "",
+                  "pm.test(\"Reservation contains requested seat\", function () {",
+                  "    const body = pm.response.json();",
+                  "",
+                  "    pm.expect(body.seatNumbers).to.include(\"B1\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"screeningId\": \"{{lateCancellationScreeningId}}\",\n  \"seatNumbers\": [\"B1\"],\n  \"customerAge\": 18\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/reservations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reservations"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel reservation - too late",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 409 Conflict\", function () {",
+                  "    pm.response.to.have.status(409);",
+                  "});",
+                  "",
+                  "pm.test(\"Error code is CANCELLATION_TOO_LATE\", function () {",
+                  "    const body = pm.response.json();",
+                  "",
+                  "    pm.expect(body.errorCode).to.eql(\"CANCELLATION_TOO_LATE\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"screeningId\": \"{{lateCancellationScreeningId}}\",\n  \"seatNumbers\": [\"B1\"],\n  \"customerAge\": 18\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/reservations/{{reservationId}}/cancel",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "reservations",
+                "{{reservationId}}",
+                "cancel"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5180"
+    },
+    {
+      "key": "futureScreeningId",
+      "value": "11111111-1111-1111-1111-111111111111"
+    },
+    {
+      "key": "reservationId",
+      "value": ""
+    },
+    {
+      "key": "StartsAt",
+      "value": ""
+    },
+    {
+      "key": "lateCancellationScreeningId",
+      "value": "33333333-3333-3333-3333-333333333333"
+    }
+  ]
+}
