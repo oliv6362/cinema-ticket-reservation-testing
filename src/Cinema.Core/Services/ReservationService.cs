@@ -30,7 +30,7 @@ public class ReservationService : IReservationService
     }
 
     // Attempts to reserve seats for a screening.
-    public ReservationResult ReserveSeats(Screening screening, List<string> requestedSeats, int customerAge)
+    public ReservationResult ReserveSeats(Screening screening, List<string>? requestedSeats, int customerAge)
     {
         if (requestedSeats is null || requestedSeats.Count == 0)
         {
