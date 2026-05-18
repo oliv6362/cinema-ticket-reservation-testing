@@ -2,7 +2,7 @@
 
 This document describes the BDD/Reqnroll test setup used in the Cinema Ticket Reservation System.
 
-BDD is included as a supporting technique in the project. The goal is not to create a large BDD suite, but to show how selected functional requirements can be expressed as readable Gherkin scenarios and executed as automated tests.
+Behavior-driven development testing is included as a supporting technique in the project. The goal is not to create a large BDD suite, but to show how selected functional requirements can be expressed as readable Gherkin scenarios and executed as automated tests.
 
 ## Purpose
 
