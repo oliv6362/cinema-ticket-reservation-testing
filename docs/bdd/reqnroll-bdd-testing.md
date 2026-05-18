@@ -10,7 +10,7 @@ The Reqnroll tests demonstrate functional testing using business-readable scenar
 
 The scenarios focus on reservation behavior that is also covered elsewhere in the project through requirements, black-box test design, unit tests, and API tests.
 
-The purpose for BBD tests is to complement the unit and API tests rather replacing them.
+The purpose of the BDD tests is to complement the unit and API tests rather than replace them.
 
 ## Location
 
@@ -54,6 +54,7 @@ The tests execute the real `ReservationService` from `Cinema.Core`, using:
 - in-memory `Screening` and `Seat` objects for test setup
 
 This keeps the scenarios deterministic and independent from the API and system clock.
+
 ## Running the Tests
 
 Run all tests from the solution root:

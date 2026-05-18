@@ -2,8 +2,8 @@
 
 This document describes the small white-box testing example used in the Cinema Ticket Reservation System.
 
-
 White-box testing is included as a supporting technique in the project. The goal is not to create a large structural test suite, but to show how source code inspection can reveal a branch that should be exercised by a test.
+
 ## Purpose
 
 The white-box test focuses on the internal control flow of one selected method:

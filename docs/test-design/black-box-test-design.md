@@ -2,13 +2,13 @@
 
 ## Purpose
 
-This document describe the black-box test design for the Cinema Ticket Reservation System.
+This document describes the black-box test design for the Cinema Ticket Reservation System.
 
 The test cases are derived from the requirements and business rules, not from the implementation. The purpose is to demonstrate selected black-box testing techniques as part of a wider software quality strategy.
 
 ## Scope
 
-This document focuses on four selected areas:
+This document focuses on five selected areas:
 
 | Area | Related Requirements | Technique |
 |---|---|---|
