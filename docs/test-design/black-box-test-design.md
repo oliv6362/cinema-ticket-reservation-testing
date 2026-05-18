@@ -126,4 +126,3 @@ Boundary value testing is used because the discount rule has a clear numeric bou
 
 This black-box test design demonstrates how selected requirements can be transformed into systematic test cases using equivalence partitioning and boundary value testing.
 
-The design is intentionally limited in scope because the project uses a wide approach. Black-box testing is one part of the overall software quality strategy, alongside design for testability, unit test design, API testing with Postman, BDD/Cucumber, and selected white-box testing.

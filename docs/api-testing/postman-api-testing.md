@@ -19,8 +19,6 @@ Covered API scenarios:
 | No seats requested | Request is rejected as invalid |
 | Cancel reservation too late | Request is rejected with conflict |
 
-The collection is intentionally limited in scope because the project uses a wide software quality approach. API testing is one part of the overall strategy, together with unit testing, black-box test design, design for testability, BDD, and selected white-box testing.
-
 ## Location
 
 ```text

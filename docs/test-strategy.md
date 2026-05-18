@@ -2,8 +2,6 @@
 
 This document describes the overall testing strategy for the Cinema Ticket Reservation System.
 
-The project uses a wide software quality approach. The goal is not to go deeply into one testing technique, but to demonstrate how several course topics can work together in a small, testable system.
-
 ## Purpose
 
 The purpose of the test strategy is to show how the system is tested at different levels:
