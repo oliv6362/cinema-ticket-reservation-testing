@@ -7,10 +7,8 @@ namespace Cinema.UnitTests.Services;
 /// <summary>
 /// Unit tests for <see cref="ReservationService"/>.
 ///
-/// These tests verify the reservation and cancellation rules from the
-/// Cinema Ticket Reservation System requirements.
-///
-/// The tests are derived from the black-box test design:
+/// Most tests verify reservation and cancellation rules derived from the
+/// Cinema Ticket Reservation System requirements and black-box test design:
 /// - FR2: Reject unavailable seats
 /// - FR3: Validate age restrictions
 /// - FR4: Validate reservation time
@@ -26,8 +24,13 @@ namespace Cinema.UnitTests.Services;
 /// and cancellation deadline. Equivalence partitioning is used for seat
 /// existence and availability.
 ///
-/// The BB prefix in the test names refers to black-box test cases from
-/// the black-box test design document.
+/// The class also contains one white-box/structural test derived from
+/// source code inspection of <see cref="ReservationService.ReserveSeats"/>:
+/// - BR4: A reservation must contain at least one seat
+///
+/// The BB prefix refers to black-box test cases from the black-box test
+/// design document. The WB prefix refers to the white-box test case added
+/// after inspecting the implementation.
 /// </summary>
 public class ReservationServiceTests
 {
@@ -264,5 +267,21 @@ public class ReservationServiceTests
         Assert.Equal("CANCELLATION_TOO_LATE", result.ErrorCode);
         Assert.False(reservation.IsCancelled);
         Assert.Contains("A1", screening.ReservedSeats);
+    }
+    
+    // White-box structural test
+    [Fact]
+    public void ReserveSeats_WB_SEATCOUNT_01_NoSeatsRequested_ShouldRejectReservation()
+    {
+        // Arrange
+        var screening = TestCinemaData.CreateDefaultScreening();
+        var requestedSeats = new List<string>();
+
+        // Act
+        var result = _reservationService.ReserveSeats(screening, requestedSeats, customerAge: 18);
+
+        // Assert
+        Assert.False(result.Success);
+        Assert.Equal("NO_SEATS_REQUESTED", result.ErrorCode);
     }
 }
