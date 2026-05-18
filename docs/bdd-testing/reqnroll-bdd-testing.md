@@ -53,8 +53,7 @@ The tests execute the real `ReservationService` from `Cinema.Core`, using:
 - `PricingService` for price calculation
 - in-memory `Screening` and `Seat` objects for test setup
 
-This keeps the scenarios deterministic and independent from the API, database, and system clock.
-
+This keeps the scenarios deterministic and independent from the API and system clock.
 ## Running the Tests
 
 Run all tests from the solution root:
