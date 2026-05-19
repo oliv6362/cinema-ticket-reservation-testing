@@ -6,6 +6,16 @@ using Reqnroll;
 
 namespace Cinema.BddTests.StepDefinitions;
 
+/// <summary>
+/// Step definitions for the Reqnroll BDD reservation scenarios.
+///
+/// These steps translate the Gherkin scenarios in <c>Reservation.feature</c>
+/// into executable tests against the real <see cref="ReservationService"/>.
+///
+/// The scenarios use in-memory domain objects and a <see cref="FakeTimeProvider"/>
+/// so the tests remain deterministic and independent from the API layer and
+/// the real system clock.
+/// </summary>
 [Binding]
 public class ReservationStepDefinitions
 {
