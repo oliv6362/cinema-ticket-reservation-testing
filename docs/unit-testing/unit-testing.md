@@ -62,9 +62,3 @@ Run all tests from the solution root:
 ```bash
 dotnet test
 ```
-
-## Role in the Overall Test Strategy
-
-The unit tests provide fast and isolated verification of the core business rules.
-
-They complement the API tests, which verify that the same behavior is exposed correctly through HTTP.
